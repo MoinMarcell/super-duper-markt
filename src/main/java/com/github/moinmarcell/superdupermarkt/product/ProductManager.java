@@ -26,21 +26,26 @@ public class ProductManager implements CommandLineRunner {
         if (product.type() == ProductType.CHEESE) {
             return product.quality() >= 30;
         }
+
         return product.quality() > 0;
     }
 
     BigDecimal calculatePrice(Product product, LocalDate date) {
         BigDecimal multiplier =
                 QUALITY_MULTIPLIER.multiply(BigDecimal.valueOf(calculateQuality(product, date)));
+
         return product.price().add(multiplier);
     }
 
     private int calculateQuality(Product product, LocalDate date) {
         if (product.type().equals(ProductType.CHEESE)) {
             return calculateCheeseQuality(product, date);
-        } else if (product.type().equals(ProductType.WINE)) {
+        }
+
+        if (product.type().equals(ProductType.WINE)) {
             return calculateWineQuality(product, date);
         }
+
         return product.quality();
     }
 
@@ -51,6 +56,7 @@ public class ProductManager implements CommandLineRunner {
     private int calculateWineQuality(Product product, LocalDate date) {
         long shelfLife = ChronoUnit.DAYS.between(product.shelved(), date);
         int qualityIncrease = (int) (shelfLife / SHELF_LIFE_DIVISOR);
+
         return Math.min(product.quality() + qualityIncrease, MAX_WINE_QUALITY);
     }
 
