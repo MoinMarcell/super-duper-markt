@@ -50,7 +50,8 @@ public class ProductManager implements CommandLineRunner {
     }
 
     private int calculateCheeseQuality(Product product, LocalDate date) {
-        return product.quality() - (int) ChronoUnit.DAYS.between(product.shelved(), date);
+        int daysSinceShelved = (int) ChronoUnit.DAYS.between(product.shelved(), date);
+        return product.quality() - daysSinceShelved;
     }
 
     private int calculateWineQuality(Product product, LocalDate date) {
