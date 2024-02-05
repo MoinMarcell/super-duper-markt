@@ -23,13 +23,14 @@ public class ProductManager implements CommandLineRunner {
     private boolean checkQuality(Product product) {
         if (product.type().equals(ProductType.CHEESE)) {
             return product.quality() >= 30;
-        } else {
-            return product.quality() > 0;
         }
+        return product.quality() > 0;
     }
 
     private BigDecimal calculatePrice(Product product, LocalDate date) {
-        return product.price().add(BigDecimal.valueOf(QUALITY_MULTIPLIER).multiply(BigDecimal.valueOf(calculateQuality(product, date))));
+        BigDecimal multiplier =
+                BigDecimal.valueOf(QUALITY_MULTIPLIER).multiply(BigDecimal.valueOf(calculateQuality(product, date)));
+        return product.price().add(multiplier);
     }
 
     private int calculateQuality(Product product, LocalDate date) {
@@ -37,9 +38,8 @@ public class ProductManager implements CommandLineRunner {
             return calculateCheeseQuality(product, date);
         } else if (product.type().equals(ProductType.WINE)) {
             return calculateWineQuality(product, date);
-        } else {
-            return product.quality();
         }
+        return product.quality();
     }
 
     private int calculateCheeseQuality(Product product, LocalDate date) {
