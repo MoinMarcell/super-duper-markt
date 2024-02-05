@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Repository
-public class ProductRepository {
+class ProductRepository {
 
     private final List<Product> products = Arrays.asList(
             new Product("Gouda", ProductType.CHEESE, new BigDecimal("1.99"), 50, LocalDate.of(2024, 3, 28),

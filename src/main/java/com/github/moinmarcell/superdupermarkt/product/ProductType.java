@@ -1,6 +1,6 @@
 package com.github.moinmarcell.superdupermarkt.product;
 
-public enum ProductType {
+enum ProductType {
     CHEESE,
     WINE,
     BREAD,

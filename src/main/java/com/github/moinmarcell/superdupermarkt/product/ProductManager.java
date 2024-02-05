@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 @Service
 @RequiredArgsConstructor
-public class ProductManager implements CommandLineRunner {
+class ProductManager implements CommandLineRunner {
 
     private static final BigDecimal QUALITY_MULTIPLIER = new BigDecimal("0.10");
     private static final int MAX_WINE_QUALITY = 50;
