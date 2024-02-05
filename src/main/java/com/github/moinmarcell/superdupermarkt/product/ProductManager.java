@@ -63,7 +63,7 @@ public class ProductManager implements CommandLineRunner {
             System.out.println(output);
         });
 
-        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = LocalDate.of(2024, 2, 5);
         Scanner scanner = new Scanner(System.in);
         System.out.print("\nBitte geben Sie die Anzahl der Tage ein: ");
         final LocalDate endDate = currentDate.plusDays(scanner.nextInt());
