@@ -13,7 +13,7 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class ProductManager implements CommandLineRunner {
 
-    private static final double QUALITY_MULTIPLIER = 0.10;
+    private static final BigDecimal QUALITY_MULTIPLIER = new BigDecimal("0.10");
     private static final int MAX_WINE_QUALITY = 50;
     private static final int SHELF_LIFE_DIVISOR = 10;
     private final ProductRepository productRepository;
@@ -23,7 +23,7 @@ public class ProductManager implements CommandLineRunner {
     }
 
     boolean checkQuality(Product product) {
-        if (product.type().equals(ProductType.CHEESE)) {
+        if (product.type() == ProductType.CHEESE) {
             return product.quality() >= 30;
         }
         return product.quality() > 0;
@@ -31,7 +31,7 @@ public class ProductManager implements CommandLineRunner {
 
     BigDecimal calculatePrice(Product product, LocalDate date) {
         BigDecimal multiplier =
-                BigDecimal.valueOf(QUALITY_MULTIPLIER).multiply(BigDecimal.valueOf(calculateQuality(product, date)));
+                QUALITY_MULTIPLIER.multiply(BigDecimal.valueOf(calculateQuality(product, date)));
         return product.price().add(multiplier);
     }
 
