@@ -8,6 +8,7 @@ public record Product(
         ProductType type,
         BigDecimal price,
         int quality,
-        LocalDate expirationDate
+        LocalDate expires,
+        LocalDate shelved
 ) {
 }
