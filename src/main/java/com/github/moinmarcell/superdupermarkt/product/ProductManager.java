@@ -16,24 +16,24 @@ public class ProductManager implements CommandLineRunner {
     private static final int SHELF_LIFE_DIVISOR = 10;
     private final ProductRepository productRepository;
 
-    private boolean isExpired(Product product, LocalDate date) {
+    boolean isExpired(Product product, LocalDate date) {
         return product.expires() != null && product.expires().isBefore(date);
     }
 
-    private boolean checkQuality(Product product) {
+    boolean checkQuality(Product product) {
         if (product.type().equals(ProductType.CHEESE)) {
             return product.quality() >= 30;
         }
         return product.quality() > 0;
     }
 
-    private BigDecimal calculatePrice(Product product, LocalDate date) {
+    BigDecimal calculatePrice(Product product, LocalDate date) {
         BigDecimal multiplier =
                 BigDecimal.valueOf(QUALITY_MULTIPLIER).multiply(BigDecimal.valueOf(calculateQuality(product, date)));
         return product.price().add(multiplier);
     }
 
-    private int calculateQuality(Product product, LocalDate date) {
+    int calculateQuality(Product product, LocalDate date) {
         if (product.type().equals(ProductType.CHEESE)) {
             return calculateCheeseQuality(product, date);
         } else if (product.type().equals(ProductType.WINE)) {
@@ -42,11 +42,11 @@ public class ProductManager implements CommandLineRunner {
         return product.quality();
     }
 
-    private int calculateCheeseQuality(Product product, LocalDate date) {
+    int calculateCheeseQuality(Product product, LocalDate date) {
         return product.quality() - (int) ChronoUnit.DAYS.between(product.shelved(), date);
     }
 
-    private int calculateWineQuality(Product product, LocalDate date) {
+    int calculateWineQuality(Product product, LocalDate date) {
         long shelfLife = ChronoUnit.DAYS.between(product.shelved(), date);
         int qualityIncrease = (int) (shelfLife / SHELF_LIFE_DIVISOR);
         return Math.min(product.quality() + qualityIncrease, MAX_WINE_QUALITY);
